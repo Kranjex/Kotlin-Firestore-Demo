@@ -7,6 +7,7 @@ import com.example.firestoredemoapp.model.Expense
 import com.example.firestoredemoapp.util.FirestoreStrings
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import java.util.UUID
 
 object FirestoreService {
 
@@ -35,12 +36,12 @@ object FirestoreService {
     }
 
     // READ only specified expense from database
-    fun getExpense(id: String): Expense? {
+    fun getExpense(id: UUID): Expense? {
         var document: Expense? = null
 
         Firebase.firestore
             .collection(FirestoreStrings.COLLECTION_EXPENSES.string)
-            .document(id)
+            .document(id.toString())
             .get()
             .addOnSuccessListener { snapshot ->
                 document = Expense.fromFirestoreMap(snapshot.data as Map<String, Any>)
@@ -59,10 +60,10 @@ object FirestoreService {
     }
 
     // CREATE new expense in database
-    fun createExpense(id: String, expense: Expense): Expense {
+    fun createExpense(id: UUID, expense: Expense): Expense {
         Firebase.firestore
             .collection(FirestoreStrings.COLLECTION_EXPENSES.string)
-            .document(id)
+            .document(id.toString())
             .set(expense)
             .addOnSuccessListener { snapshot ->
                 Toast.makeText(
@@ -85,10 +86,10 @@ object FirestoreService {
     }
 
     // UPDATE specified expense in database
-    fun updateExpense(id: String, expense: Expense): Expense {
+    fun updateExpense(id: UUID, expense: Expense): Expense {
         Firebase.firestore
             .collection(FirestoreStrings.COLLECTION_EXPENSES.string)
-            .document(id)
+            .document(id.toString())
             .update(
                 "storeName", expense.storeName,
                 "timestamp", expense.timestamp,
@@ -115,10 +116,10 @@ object FirestoreService {
     }
 
     // DELETE specified expense in database
-    fun deleteExpense(id: String) {
+    fun deleteExpense(id: UUID) {
         Firebase.firestore
             .collection(FirestoreStrings.COLLECTION_EXPENSES.string)
-            .document(id)
+            .document(id.toString())
             .delete()
             .addOnSuccessListener {
                 Toast.makeText(
