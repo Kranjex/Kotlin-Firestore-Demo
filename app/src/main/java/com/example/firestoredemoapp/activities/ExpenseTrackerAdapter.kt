@@ -15,7 +15,6 @@ class ExpenseTrackerAdapter(
     private val app: FirestoreDemoApplication,
     private val onClickObject: itemOnClick,
     private val onLongClickObject: itemOnLongClick
-//    var onLongClickObject: ExpenseTrackerAdapter.itemOnLongClick? = null
 ) : RecyclerView.Adapter<ExpenseTrackerAdapter.ViewHolder>() {
 
     interface itemOnClick {
@@ -64,13 +63,7 @@ class ExpenseTrackerAdapter(
         holder.container.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(p0: View?): Boolean {
                 // Remove expense from the list
-//                onLongClickObject!!.onLongClick(p0, holder.adapterPosition)
-
-                FirestoreService.deleteExpense(
-                    app.expenses[holder.position].id,
-                    object : FirestoreService.FirestoreCallback {}
-                )
-
+                onLongClickObject.onLongClick(p0, holder.adapterPosition)
                 return true
             }
         })

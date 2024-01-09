@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     )
                     val storeName = app.expenses[position].storeName
                     val timestamp = app.expenses[position].timestamp
-                    val price = app.expenses[position].storeName
+                    val price = app.expenses[position].price
 
                     intent.putExtra("SELECTED_ID", id.toString())
                     intent.putExtra("SELECTED_STORE_NAME", storeName)
@@ -47,7 +47,10 @@ class MainActivity : AppCompatActivity() {
             // Long click listener
             object : ExpenseTrackerAdapter.itemOnLongClick {
                 override fun onLongClick(p0: View?, position: Int) {
-
+                    FirestoreService.deleteExpense(
+                        app.expenses[position].id,
+                        object : FirestoreService.FirestoreCallback {}
+                    )
                 }
             }
         )
