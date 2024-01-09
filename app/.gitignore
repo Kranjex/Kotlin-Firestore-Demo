@@ -1,1 +1,4 @@
 /build
+
+# Firebase data (other users should create their own)
+google-services.json
